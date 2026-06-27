@@ -11,6 +11,7 @@ Treat each capability as a small product specification that can move from idea t
 2. Keep reusable guidance in `.specify/memory/`.
 3. Update templates in `.specify/templates/` only when the workflow itself changes.
 4. Prefer small, reviewable changes and keep specs aligned with implementation.
+5. Use `git worktree` for parallel implementation streams so separate tasks can run in isolated working directories without blocking each other.
 
 ## Capability Workflow
 
