@@ -16,7 +16,8 @@ that remain aligned with the constitution.
 - `.specify/` holds project memory and reusable templates.
 - `specs/` holds capability specifications.
 - `AGENTS.md` gives Codex-specific working rules for this repository.
-- `CLAUDE.md` mirrors the generated project guidance for other assistants.
+- `CLAUDE.md` gives the companion Claude-specific development guidance.
+- `.specify/scripts/powershell/update-agent-context.ps1` can refresh both `AGENTS.md` and `CLAUDE.md` from current plan data.
 
 ## Workflow
 

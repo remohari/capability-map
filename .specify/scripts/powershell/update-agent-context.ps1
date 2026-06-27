@@ -214,6 +214,8 @@ function New-AgentFile {
         [Parameter(Mandatory=$true)]
         [string]$ProjectName,
         [Parameter(Mandatory=$true)]
+        [string]$AgentName,
+        [Parameter(Mandatory=$true)]
         [datetime]$Date
     )
     if (-not (Test-Path $TEMPLATE_FILE)) { Write-Err "Template not found at $TEMPLATE_FILE"; return $false }
@@ -230,6 +232,7 @@ function New-AgentFile {
 
     $content = Get-Content -LiteralPath $temp -Raw -Encoding utf8
     $content = $content -replace '\[PROJECT NAME\]',$ProjectName
+    $content = $content -replace '\[AGENT NAME\]',$AgentName
     $content = $content -replace '\[DATE\]',$Date.ToString('yyyy-MM-dd')
     
     # Build the technology stack string safely
@@ -282,9 +285,11 @@ function Update-ExistingAgentFile {
         [Parameter(Mandatory=$true)]
         [string]$TargetFile,
         [Parameter(Mandatory=$true)]
+        [string]$AgentName,
+        [Parameter(Mandatory=$true)]
         [datetime]$Date
     )
-    if (-not (Test-Path $TargetFile)) { return (New-AgentFile -TargetFile $TargetFile -ProjectName (Split-Path $REPO_ROOT -Leaf) -Date $Date) }
+    if (-not (Test-Path $TargetFile)) { return (New-AgentFile -TargetFile $TargetFile -ProjectName (Split-Path $REPO_ROOT -Leaf) -AgentName $AgentName -Date $Date) }
 
     $techStack = Format-TechnologyStack -Lang $NEW_LANG -Framework $NEW_FRAMEWORK
     $newTechEntries = @()
@@ -372,10 +377,10 @@ function Update-AgentFile {
     if (-not (Test-Path $dir)) { New-Item -ItemType Directory -Path $dir | Out-Null }
 
     if (-not (Test-Path $TargetFile)) {
-        if (New-AgentFile -TargetFile $TargetFile -ProjectName $projectName -Date $date) { Write-Success "Created new $AgentName context file" } else { Write-Err 'Failed to create new agent file'; return $false }
+        if (New-AgentFile -TargetFile $TargetFile -ProjectName $projectName -AgentName $AgentName -Date $date) { Write-Success "Created new $AgentName context file" } else { Write-Err 'Failed to create new agent file'; return $false }
     } else {
         try {
-            if (Update-ExistingAgentFile -TargetFile $TargetFile -Date $date) { Write-Success "Updated existing $AgentName context file" } else { Write-Err 'Failed to update agent file'; return $false }
+            if (Update-ExistingAgentFile -TargetFile $TargetFile -AgentName $AgentName -Date $date) { Write-Success "Updated existing $AgentName context file" } else { Write-Err 'Failed to update agent file'; return $false }
         } catch {
             Write-Err "Cannot access or update existing file: $TargetFile. $_"
             return $false

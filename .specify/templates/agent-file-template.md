@@ -1,6 +1,6 @@
-# [PROJECT NAME] Development Guidelines
+# [AGENT NAME] Development Guidelines
 
-Auto-generated from all feature plans. Last updated: [DATE]
+Auto-generated from all feature plans for [PROJECT NAME]. Last updated: [DATE]
 
 ## Active Technologies
 
