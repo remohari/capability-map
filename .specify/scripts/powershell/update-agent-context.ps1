@@ -390,7 +390,7 @@ function Update-SpecificAgent {
         [string]$Type
     )
     switch ($Type) {
-        'claude'   { Update-AgentFile -TargetFile $CLAUDE_FILE   -AgentName 'Claude Code' }
+        'claude'   { Update-AgentFile -TargetFile $CLAUDE_FILE -AgentName 'Claude Code'; Update-AgentFile -TargetFile $AGENTS_FILE -AgentName 'AGENTS.md' }
         'gemini'   { Update-AgentFile -TargetFile $GEMINI_FILE   -AgentName 'Gemini CLI' }
         'copilot'  { Update-AgentFile -TargetFile $COPILOT_FILE  -AgentName 'GitHub Copilot' }
         'cursor-agent' { Update-AgentFile -TargetFile $CURSOR_FILE   -AgentName 'Cursor IDE' }

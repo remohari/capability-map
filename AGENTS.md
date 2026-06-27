@@ -22,3 +22,13 @@ Treat each capability as a small product specification that can move from idea t
 2. Draft an execution plan in `specs/<capability-name>/plan.md`.
 3. Break the work into `specs/<capability-name>/tasks.md`.
 4. Implement and keep the documents current as decisions change.
+
+## Active Technologies
+- .NET 10 backend, Angular + Vite + TypeScript frontend + ASP.NET Core, Entity Framework, Clarity, Auth0, existing validation and logging stack (004-fragekatalog-upload)
+- PostgreSQL via Entity Framework for persisted generation metadata and logs (004-fragekatalog-upload)
+
+<!-- Auto-updated by update-agent-context.ps1 -->
+
+## Recent Changes
+
+<!-- Auto-updated by update-agent-context.ps1 -->
