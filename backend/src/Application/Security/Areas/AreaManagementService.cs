@@ -91,6 +91,50 @@ public sealed class AreaManagementService
             .ToArray();
     }
 
+    public HomepageAreasResponse GetHomepageAreas(
+        UserRoleContext user,
+        string? search,
+        int page,
+        int pageSize)
+    {
+        var normalizedSearch = search?.Trim();
+        var scopedAreas = GetAreasForUser(user, requestedCustomerScope: null).AsEnumerable();
+
+        if (!string.IsNullOrWhiteSpace(normalizedSearch))
+        {
+            scopedAreas = scopedAreas.Where(area =>
+                area.Name.Contains(normalizedSearch, StringComparison.OrdinalIgnoreCase) ||
+                area.CustomerName.Contains(normalizedSearch, StringComparison.OrdinalIgnoreCase));
+        }
+
+        var totalItems = scopedAreas.Count();
+        var totalPages = totalItems == 0 ? 0 : (int)Math.Ceiling(totalItems / (double)pageSize);
+        var items = scopedAreas
+            .Skip((page - 1) * pageSize)
+            .Take(pageSize)
+            .Select(area => new HomepageAreaTileResponse(
+                area.AreaId,
+                area.CustomerId,
+                area.Name,
+                area.Status,
+                $"/customer-areas/{area.AreaId}"))
+            .ToArray();
+
+        _auditTrail.Add(_auditLogger.CreateRoleMutationEvent(
+            totalItems == 0 ? "areas_empty" : "areas_loaded",
+            user.DisplayReference,
+            user.UserId,
+            "homepage-customer-areas"));
+
+        return new HomepageAreasResponse(
+            Items: items,
+            Page: page,
+            PageSize: pageSize,
+            TotalItems: totalItems,
+            TotalPages: totalPages,
+            IsEmpty: totalItems == 0);
+    }
+
     public AreaResponse? GetAreaById(Guid areaId, UserRoleContext user)
     {
         var area = _store.GetArea(areaId);

@@ -34,3 +34,9 @@ that remain aligned with the constitution.
 2. Use the updated templates in `.specify/templates/` for plan and task setup.
 3. If you install the `specify` CLI locally, keep the generated artifacts aligned
    with `.specify/memory/constitution.md`.
+
+## Baseline Verification Commands
+
+- `dotnet build backend/CapabilityMap.Backend.csproj`
+- `npm --prefix frontend run build`
+- `npm --prefix frontend audit`
