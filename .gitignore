@@ -17,3 +17,16 @@ Thumbs.db
 dist/
 build/
 coverage/
+
+# Node / frontend
+node_modules/
+
+# .NET / backend
+bin/
+obj/
+*.user
+*.suo
+
+# Temporary files
+*.tmp
+*.swp

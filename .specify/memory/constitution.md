@@ -1,3 +1,22 @@
+<!--
+Sync Impact Report
+- Version change: 1.3.0 -> 1.3.1
+- Modified principles:
+  - II. Test-First (NON-NEGOTIABLE) -> terminology aligned to Angular/.NET/Entity Framework stack
+  - IV. Observability & Logging -> backend terminology aligned to ASP.NET Core
+  - V. Versioning & Breaking Changes -> migration terminology aligned to Entity Framework
+- Added sections: none
+- Removed sections: none
+- Templates requiring updates:
+  - ✅ .specify/templates/plan-template.md
+  - ✅ .specify/templates/spec-template.md
+  - ✅ .specify/templates/tasks-template.md
+  - ✅ .specify/templates/agent-file-template.md
+  - ✅ README.md
+  - ✅ specs/README.md
+  - ✅ CLAUDE.md
+- Follow-up TODOs: none
+-->
 # DigiDude Constitution
 
 ## Core Principles
@@ -21,9 +40,9 @@ implementation is written (Red-Green-Refactor).
 
 - Backend Tests are written in Xunit
 - Unit tests are REQUIRED for all non-trivial business logic (frontend
-  utilities, Express route handlers, Prisma service methods).
-- Integration tests are REQUIRED for Express API endpoints and Prisma
-  database interactions.
+  utilities, Angular route guards/services, ASP.NET Core application and domain services).
+- Integration tests are REQUIRED for ASP.NET Core API endpoints and
+  Entity Framework database interactions.
 - A task is NOT complete until its associated tests pass.
 - Skipping or disabling tests requires explicit written justification in the
   PR description.
@@ -45,7 +64,7 @@ All production code paths MUST produce structured, actionable log output.
 - Errors MUST be logged with enough context to reproduce the issue without a
   debugger (include request ID, user context, and stack trace where applicable).
 - Business-critical events (user actions, state transitions, external DB calls)
-  MUST emit structured log entries on the Express backend.
+  MUST emit structured log entries on the ASP.NET Core backend.
 - Frontend errors MUST be surfaced to the user via appropriate UI feedback
   (toast / error boundary) and MUST NOT fail silently.
 - Log levels MUST follow: DEBUG (dev-only), INFO (normal ops), WARN
@@ -55,11 +74,11 @@ All production code paths MUST produce structured, actionable log output.
 
 Public REST API contracts MUST follow Semantic Versioning (MAJOR.MINOR.PATCH).
 
-- MAJOR: backward-incompatible changes to any REST endpoint or Prisma schema
+- MAJOR: backward-incompatible changes to any REST endpoint or database schema
   that break existing clients.
-- MINOR: backward-compatible new endpoints or additive schema migrations.
+- MINOR: backward-compatible new endpoints or additive Entity Framework migrations.
 - PATCH: backward-compatible bug fixes and clarifications.
-- Breaking Prisma migrations MUST include a rollback script and MUST NOT be
+- Breaking Entity Framework migrations MUST include a rollback script and MUST NOT be
   merged without a documented deprecation period (minimum one release cycle).
 
 ### VI. OWASP Top 10 Compliance (NON-NEGOTIABLE)
@@ -77,8 +96,9 @@ weaken them and MUST extend them where the feature surface demands:
 - **A02 Cryptographic Failures**: secrets in DB MUST be AES-256-GCM-encrypted via
   `crypto.service` (unique IV + AuthTag). `AI_ENCRYPTION_KEY` is environment-only,
   never committed. HTTPS-only in production.
-- **A03 Injection**: Prisma ORM only — no raw SQL. Inputs MUST be validated with
-  Zod. `dangerouslySetInnerHTML` MUST NOT be used.
+- **A03 Injection**: Entity Framework only — no raw SQL. Inputs MUST be validated
+  with Zod on the frontend and server-side request validation on the backend.
+  `[innerHTML]` and DOM bypass APIs MUST NOT be used for untrusted content.
 - **A04 Insecure Design**: rate limiting MUST be enabled (global baseline +
   strict on auth). Body size limits MUST be set (5 MB JSON cap).
 - **A05 Security Misconfiguration**: `helmet()` always-on, CORS allowlist,
@@ -87,7 +107,7 @@ weaken them and MUST extend them where the feature surface demands:
   (high/moderate/low) before each merge. CI/PR-Gate.
 - **A07 Authentication Failures**: Auth0 only. Auth events logged INFO/WARN.
   No own session cookies (JWT-Bearer only).
-- **A08 Software & Data Integrity**: lockfiles + Prisma migrations committed.
+- **A08 Software & Data Integrity**: lockfiles + Entity Framework migrations committed.
   No unbundled CDN-loaded scripts in the frontend.
 - **A09 Logging & Monitoring Failures**: structured logs for every business event
   (assigned/unassigned/access_denied/etc.). Niemals PII / Tokens / E-Mails in Logs
@@ -118,13 +138,14 @@ and MUST be used unless an amendment explicitly replaces them.
 **Constraints**:
 - All new npm dependencies MUST be justified in the PR description; prefer
   packages already in the ecosystem over adding new ones.
-- Prisma schema changes MUST be accompanied by a migration file (`prisma
-  migrate dev`) committed in the same PR.
-- Mantine components MUST be used for common UI patterns before writing
-  custom components from scratch. Theme tokens (colors, spacing, radius,
-  typography) MUST be sourced from `frontend/src/theme.ts`; hard-coded
-  hex/rgba values in components are prohibited.
-- Tailwind CSS and shadcn/ui MUST NOT be reintroduced without an amendment.
+- Entity Framework schema changes MUST be accompanied by a committed migration
+  in the same PR.
+- Clarity components MUST be used for common UI patterns before writing custom
+  components from scratch. Shared design tokens and theme variables MUST be
+  sourced from the frontend theme system; hard-coded hex/rgba values in
+  components are prohibited.
+- Tailwind CSS and shadcn/ui MUST NOT be introduced or reintroduced without an
+  amendment.
 
 ## Quality Gates
 
@@ -138,7 +159,7 @@ All pull requests MUST satisfy the following gates before merge:
    and acknowledged by a reviewer.
 5. **Observability gate** — new backend code paths include structured logging;
    new frontend error paths surface user-facing feedback.
-6. **Migration gate** — any Prisma schema change includes a committed
+6. **Migration gate** — any Entity Framework schema change includes a committed
    migration file and a rollback script.
 7. **Versioning gate** — any API contract changes are correctly versioned and
    documented.
@@ -187,4 +208,4 @@ removal or incompatible redefinition of principles.
 PR review via the Constitution Check section in `plan.md`. Violations require
 explicit justification in the Complexity Tracking table.
 
-**Version**: 1.3.0 | **Ratified**: 2026-03-24 | **Last Amended**: 2026-04-16
+**Version**: 1.3.1 | **Ratified**: 2026-03-24 | **Last Amended**: 2026-06-27

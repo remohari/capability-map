@@ -1,0 +1,12 @@
+node_modules/
+dist/
+build/
+coverage/
+bin/
+obj/
+.git/
+.specify/
+specs/
+*.log
+.env
+.env.*
