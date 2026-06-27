@@ -37,7 +37,7 @@ export class AdvisorHomePageComponent implements OnInit {
   }
 
   protected loadCases(): void {
-    this.http.get('http://localhost:8080/api/advisor/cases', {
+    this.http.get('/api/advisor/cases', {
       headers: new HttpHeaders(this.authState.toRequestHeaders()),
     }).subscribe({
       next: (value) => {

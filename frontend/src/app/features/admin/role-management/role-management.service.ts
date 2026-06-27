@@ -19,7 +19,7 @@ export type RoleAssignmentRecord = {
 export class RoleManagementService {
   private readonly http = inject(HttpClient);
   private readonly authState = inject(AuthStateService);
-  private readonly apiBaseUrl = 'http://localhost:8080';
+  private readonly apiBaseUrl = '';
 
   getAssignments(): Observable<RoleAssignmentRecord[]> {
     return this.http.get<RoleAssignmentRecord[]>(`${this.apiBaseUrl}/api/role-assignments`);

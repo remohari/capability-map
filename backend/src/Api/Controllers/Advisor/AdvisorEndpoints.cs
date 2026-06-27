@@ -26,11 +26,11 @@ public static class AdvisorEndpoints
             return Results.Ok(new
             {
                 advisor = user.DisplayReference,
-                cases =
-                [
+                cases = new[]
+                {
                     new { id = "case-001", title = "Foerderantrag pruefen", status = "in_beratung" },
                     new { id = "case-002", title = "Unterlagen nachreichen", status = "wartet_auf_kunde" }
-                ]
+                }
             });
         });
 

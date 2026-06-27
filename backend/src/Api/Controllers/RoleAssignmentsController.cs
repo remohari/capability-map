@@ -1,6 +1,7 @@
 using CapabilityMap.Backend.Api.Controllers;
 using CapabilityMap.Backend.Api.Middleware;
 using CapabilityMap.Backend.Application.Security.RoleAssignments;
+using CapabilityMap.Backend.Infrastructure.Logging;
 using CapabilityMap.Backend.Security;
 
 namespace CapabilityMap.Backend.Api.Controllers;

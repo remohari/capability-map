@@ -2,6 +2,7 @@ using CapabilityMap.Backend.Api.Controllers;
 using CapabilityMap.Backend.Api.Controllers.Advisor;
 using CapabilityMap.Backend.Api.Controllers.Customer;
 using CapabilityMap.Backend.Api.Controllers.Evaluator;
+using CapabilityMap.Backend.Application.Security.Areas;
 using CapabilityMap.Backend.Application.Security.RoleAssignments;
 using CapabilityMap.Backend.Infrastructure.Logging;
 using CapabilityMap.Backend.Infrastructure.Persistence;
@@ -24,6 +25,11 @@ builder.Services.AddSingleton<RoleAuthorizationService>();
 builder.Services.AddSingleton<AuthorizationEventLogger>();
 builder.Services.AddSingleton<IRoleAssignmentStore, InMemoryRoleAssignmentStore>();
 builder.Services.AddSingleton<RoleAssignmentService>();
+builder.Services.AddSingleton<IAreaStore, InMemoryAreaStore>();
+builder.Services.AddSingleton<AreaManagementService>();
+builder.Services.AddSingleton<AreaCreationService>();
+builder.Services.AddSingleton<AreaPermissionService>();
+builder.Services.AddSingleton<AreaEventLogger>();
 builder.Services.AddSingleton<CustomerAccessPolicy>();
 
 var app = builder.Build();
@@ -45,10 +51,13 @@ app.MapGet("/", () => Results.Ok(new
     {
         "/health",
         RoleAssignmentsController.Route,
+        AreaController.Route,
     },
 }));
 
 app.MapRoleAssignmentEndpoints();
+    app.MapAreaEndpoints();
+app.MapAreaPermissionEndpoints();
 app.MapCustomerContentEndpoints();
 app.MapAdvisorEndpoints();
 app.MapEvaluatorEndpoints();
