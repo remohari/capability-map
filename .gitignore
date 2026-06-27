@@ -1,0 +1,19 @@
+# OS
+Thumbs.db
+.DS_Store
+
+# Editors
+.idea/
+.vscode/
+
+# Logs
+*.log
+
+# Local env
+.env
+.env.*
+
+# Build output
+dist/
+build/
+coverage/
