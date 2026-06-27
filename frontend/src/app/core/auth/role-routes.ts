@@ -11,6 +11,16 @@ export type ProtectedRoute = {
 // Guard behavior and UI enforcement are added in later tasks.
 export const protectedRoutes: ProtectedRoute[] = [
   {
+    path: '/customer-areas',
+    allowedRoles: ['Kund:in', 'Berater:in', 'Bewerter:in', 'Admin'],
+    navigationLabel: 'Kundenbereiche',
+  },
+  {
+    path: '/customer-areas/:areaId',
+    allowedRoles: ['Kund:in', 'Berater:in', 'Bewerter:in', 'Admin'],
+    navigationLabel: 'Bereichsdetails',
+  },
+  {
     path: '/customer',
     allowedRoles: ['Kund:in'],
     navigationLabel: 'Meine Inhalte',

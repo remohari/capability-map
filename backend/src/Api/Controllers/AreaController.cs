@@ -49,6 +49,38 @@ public static class AreaController
             return Results.Ok(results);
         });
 
+        endpoints.MapGet("/api/home/customer-areas", (
+            string? search,
+            int? page,
+            int? pageSize,
+            HttpRequest httpRequest,
+            RoleAuthorizationService authorizationService,
+            AreaManagementService service) =>
+        {
+            var actor = RequestUserContextFactory.Create(httpRequest);
+            var decision = authorizationService.EvaluateAccess(actor, target: "list-areas");
+
+            if (decision.Result == Domain.Security.AuthorizationResult.Denied)
+            {
+                return AuthorizationHttpResponses.FromDecision(decision);
+            }
+
+            var normalizedPage = page ?? 1;
+            var normalizedPageSize = pageSize ?? 20;
+            if (normalizedPage < 1 || normalizedPageSize < 1 || normalizedPageSize > 100)
+            {
+                return Results.BadRequest(new
+                {
+                    type = "validation_error",
+                    title = "Ungueltige Such- oder Paginierungsparameter",
+                    detail = "Provided query parameters are invalid."
+                });
+            }
+
+            var result = service.GetHomepageAreas(actor, search, normalizedPage, normalizedPageSize);
+            return Results.Ok(result);
+        });
+
         endpoints.MapGet($"{Route}/{{areaId}}", (
             Guid areaId,
             HttpRequest httpRequest,
