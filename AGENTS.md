@@ -12,6 +12,9 @@ Treat each capability as a small product specification that can move from idea t
 3. Update templates in `.specify/templates/` only when the workflow itself changes.
 4. Prefer small, reviewable changes and keep specs aligned with implementation.
 5. Use `git worktree` for parallel implementation streams so separate tasks can run in isolated working directories without blocking each other.
+6. Execute Speckit steps manually only; do not auto-run them.
+7. Ask for confirmation before each Speckit step.
+8. Track the current implementation status in each capability `tasks.md` (checkboxes plus a short status summary).
 
 ## Capability Workflow
 
