@@ -26,11 +26,11 @@ public static class EvaluatorEndpoints
             return Results.Ok(new
             {
                 evaluator = user.DisplayReference,
-                queue =
-                [
+                queue = new[]
+                {
                     new { id = "eval-001", title = "Antrag A", priority = "hoch" },
                     new { id = "eval-002", title = "Antrag B", priority = "mittel" }
-                ]
+                }
             });
         });
 

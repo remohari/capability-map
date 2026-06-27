@@ -11,17 +11,17 @@ public static class RoleDefinitions
         new Dictionary<string, RoleCapabilitySet>
         {
             [Customer] = new(
-                VisibleAreas: ["customer-dashboard", "customer-profile"],
-                AllowedActions: ["view-own-content", "use-own-functions"]),
+                VisibleAreas: ["customer-dashboard", "customer-profile", "list-areas", "view-area"],
+                AllowedActions: ["view-own-content", "use-own-functions", "list-areas", "view-area"]),
             [Advisor] = new(
-                VisibleAreas: ["advisor-dashboard", "advisor-cases"],
-                AllowedActions: ["view-assigned-cases", "edit-advisory-data"]),
+                VisibleAreas: ["advisor-dashboard", "advisor-cases", "list-areas", "view-area"],
+                AllowedActions: ["view-assigned-cases", "edit-advisory-data", "list-areas", "view-area"]),
             [Evaluator] = new(
-                VisibleAreas: ["evaluator-dashboard", "evaluation-queue"],
-                AllowedActions: ["view-evaluation-content", "submit-evaluation"]),
+                VisibleAreas: ["evaluator-dashboard", "evaluation-queue", "list-areas", "view-area"],
+                AllowedActions: ["view-evaluation-content", "submit-evaluation", "list-areas", "view-area"]),
             [Admin] = new(
-                VisibleAreas: ["admin-dashboard", "role-management", "system-settings"],
-                AllowedActions: ["assign-roles", "change-roles", "remove-roles"])
+                VisibleAreas: ["admin-dashboard", "role-management", "system-settings", "list-areas", "view-area"],
+                AllowedActions: ["assign-roles", "change-roles", "remove-roles", "create-area", "manage-area-permissions", "list-areas", "view-area"])
         };
 }
 

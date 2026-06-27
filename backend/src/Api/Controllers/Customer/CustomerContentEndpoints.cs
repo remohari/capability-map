@@ -31,12 +31,12 @@ public static class CustomerContentEndpoints
             {
                 customerId,
                 owner = user.DisplayReference,
-                items =
-                [
+                items = new[]
+                {
                     "Persoenliches Dashboard",
                     "Eigene Beratungshistorie",
                     "Freigegebene Dokumente"
-                ]
+                }
             });
         });
 

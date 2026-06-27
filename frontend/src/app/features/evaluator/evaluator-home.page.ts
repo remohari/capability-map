@@ -37,7 +37,7 @@ export class EvaluatorHomePageComponent implements OnInit {
   }
 
   protected loadQueue(): void {
-    this.http.get('http://localhost:8080/api/evaluator/queue', {
+    this.http.get('/api/evaluator/queue', {
       headers: new HttpHeaders(this.authState.toRequestHeaders()),
     }).subscribe({
       next: (value) => {

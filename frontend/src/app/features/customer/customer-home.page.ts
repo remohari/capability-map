@@ -39,7 +39,7 @@ export class CustomerHomePageComponent implements OnInit {
 
   protected loadContent(): void {
     const scope = this.authState.currentUser().customerScope ?? 'customer-001';
-    this.http.get(`http://localhost:8080/api/customer/content/${scope}`, {
+    this.http.get(`/api/customer/content/${scope}`, {
       headers: new HttpHeaders(this.authState.toRequestHeaders()),
     }).subscribe({
       next: (value) => {
